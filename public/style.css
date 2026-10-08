@@ -1,0 +1,150 @@
+/* Оформление реестра MCP-подключений: светлая и тёмная тема по настройке системы. */
+:root {
+  color-scheme: light dark;
+  --bg: #f5f6f8;
+  --panel: #ffffff;
+  --text: #1c2330;
+  --muted: #667085;
+  --border: #dde1e7;
+  --accent: #2456c9;
+  --accent-text: #ffffff;
+  --danger: #c0392b;
+  --prod-bg: #fde8e6;
+  --prod-text: #a12a1d;
+  --badge-bg: #e9edf3;
+  --row-hover: #f0f4fb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171c;
+    --panel: #1d2128;
+    --text: #e6e9ee;
+    --muted: #98a2b3;
+    --border: #2f353f;
+    --accent: #5b8cff;
+    --accent-text: #0d1220;
+    --danger: #ff7b6b;
+    --prod-bg: #4a1f1a;
+    --prod-text: #ffb4a8;
+    --badge-bg: #2a303a;
+    --row-hover: #232935;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.45 "Segoe UI", system-ui, sans-serif;
+}
+
+h1 { font-size: 18px; margin: 0; }
+h2 { font-size: 16px; margin: 0 0 12px; }
+.muted { color: var(--muted); }
+.error { color: var(--danger); margin: 0; }
+
+button, input, select {
+  font: inherit;
+  color: inherit;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+button { cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+button.danger { color: var(--danger); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+.topbar h1 { flex: 1; }
+
+main { padding: 16px; }
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.toolbar input[type="search"] { flex: 1 1 260px; max-width: 480px; }
+.toolbar #counter { flex: 1; }
+
+.table-wrap {
+  overflow-x: auto;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+table { border-collapse: collapse; width: 100%; }
+th, td {
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: var(--row-hover); }
+th { white-space: nowrap; padding: 4px; }
+td { overflow-wrap: anywhere; min-width: 90px; }
+td.title { font-weight: 600; min-width: 170px; }
+td.actions { white-space: nowrap; min-width: 0; }
+td.actions button { padding: 3px 8px; margin-right: 4px; }
+
+button.sort {
+  border: 0;
+  background: none;
+  font-weight: 600;
+  padding: 6px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 10px;
+  background: var(--badge-bg);
+  white-space: nowrap;
+}
+.badge.prod { background: var(--prod-bg); color: var(--prod-text); font-weight: 600; }
+
+.empty { padding: 24px; text-align: center; margin: 0; }
+
+dialog {
+  width: min(560px, calc(100vw - 32px));
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--text);
+  padding: 20px;
+}
+dialog::backdrop { background: rgb(0 0 0 / 45%); }
+
+.fields { display: grid; gap: 10px; margin-bottom: 12px; }
+label { display: grid; gap: 4px; color: var(--muted); }
+label input:not([type="checkbox"]) { color: var(--text); width: 100%; }
+label.check { display: flex; align-items: center; gap: 8px; color: var(--text); }
+.dialog-buttons { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+
+.login-page { display: grid; place-items: center; min-height: 100vh; padding: 16px; }
+.login-card {
+  display: grid;
+  gap: 14px;
+  width: min(340px, 100%);
+  padding: 24px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}

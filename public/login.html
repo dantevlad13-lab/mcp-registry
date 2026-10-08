@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход — реестр MCP-подключений</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="login-page">
+  <form id="login-form" class="login-card">
+    <h1>Реестр MCP-подключений</h1>
+    <label>Логин
+      <input name="login" autocomplete="username" required autofocus>
+    </label>
+    <label>Пароль
+      <input name="password" type="password" autocomplete="current-password" required>
+    </label>
+    <p id="login-error" class="error" hidden></p>
+    <button type="submit" class="primary">Войти</button>
+  </form>
+  <script src="/login.js"></script>
+</body>
+</html>

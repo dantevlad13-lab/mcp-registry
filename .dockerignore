@@ -1,0 +1,8 @@
+# В образ не попадают рабочие данные и служебные файлы
+data
+.git
+.github
+deploy
+node_modules
+*.log
+README.md

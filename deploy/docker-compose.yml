@@ -1,0 +1,79 @@
+# Реестр MCP-подключений: приложение + nginx.
+# Автообновление (watchtower) и автолечение (autoheal) включаются профилем standalone:
+#   docker compose --profile standalone up -d
+# Если на сервере уже работают watchtower и autoheal с отбором по меткам, профиль не нужен:
+# они подхватят приложение по меткам, а второй watchtower без области действия удалил бы первый.
+name: mcp-registry
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  app:
+    image: ${IMAGE:?укажите IMAGE в .env}
+    restart: unless-stopped
+    expose:
+      - "8787"
+    environment:
+      TZ: ${TZ:-Asia/Novosibirsk}
+      TRUST_PROXY: "1"
+    volumes:
+      # список подключений и пользователи; владелец каталога — uid 1000 (пользователь node в образе)
+      - ./data:/data
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+      autoheal: "true"
+    mem_limit: 256m
+    logging: *logging
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    ports:
+      # внешний порт задаётся HTTP_PORT в .env
+      - "0.0.0.0:${HTTP_PORT:-6969}:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/nginx-health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    labels:
+      autoheal: "true"
+    logging: *logging
+
+  # Подтягивает новые версии образа приложения из реестра.
+  # Форк nickfedor/watchtower: оригинальный containrrr не работает с Docker 29+
+  watchtower:
+    profiles: ["standalone"]
+    image: nickfedor/watchtower:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      TZ: ${TZ:-Asia/Novosibirsk}
+      WATCHTOWER_LABEL_ENABLE: "true"
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_POLL_INTERVAL: "300"
+      WATCHTOWER_INCLUDE_RESTARTING: "true"
+    logging: *logging
+
+  # Перезапускает контейнеры, у которых healthcheck в состоянии unhealthy
+  autoheal:
+    profiles: ["standalone"]
+    image: willfarrell/autoheal:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      AUTOHEAL_CONTAINER_LABEL: autoheal
+      AUTOHEAL_INTERVAL: "15"
+      TZ: ${TZ:-Asia/Novosibirsk}
+    logging: *logging

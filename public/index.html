@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Реестр MCP-подключений</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Реестр MCP-подключений</h1>
+    <span id="user-name" class="muted"></span>
+    <button id="logout" type="button">Выйти</button>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Поиск по всем полям" aria-label="Поиск по всем полям">
+      <select id="prod-filter" aria-label="Отбор по признаку «бой»">
+        <option value="">Все базы</option>
+        <option value="true">Только бой</option>
+        <option value="false">Только не бой</option>
+      </select>
+      <span id="counter" class="muted"></span>
+      <button id="add" type="button" class="primary">Добавить</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr id="table-head"></tr></thead>
+        <tbody id="table-body"></tbody>
+      </table>
+      <p id="empty" class="muted empty" hidden>Ничего не найдено</p>
+    </div>
+  </main>
+
+  <dialog id="editor">
+    <form id="editor-form" method="dialog">
+      <h2 id="editor-title"></h2>
+      <div id="editor-fields" class="fields"></div>
+      <p id="editor-error" class="error" hidden></p>
+      <div class="dialog-buttons">
+        <button type="button" id="editor-cancel">Отмена</button>
+        <button type="submit" class="primary">Сохранить</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "mcp-registry",
+  "version": "1.0.0",
+  "description": "Реестр подключений к MCP-серверам: вход по логину и паролю, таблица с поиском и сортировкой",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "set-password": "node scripts/set-password.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

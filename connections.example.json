@@ -1,0 +1,28 @@
+[
+  {
+    "id": "example_copy",
+    "title": "Пример: копия базы",
+    "infobase": "demo_copy",
+    "name": "1c_demo_copy",
+    "config": "Бухгалтерия предприятия 3.0",
+    "url": "http://server.example:8080/demo_copy/hs/mcp-1c",
+    "cluster": "server.example\\demo_copy",
+    "dump": "D:\\dump\\demo",
+    "note": "",
+    "prod": false,
+    "allowExecute": true
+  },
+  {
+    "id": "example_prod",
+    "title": "Пример: боевая база",
+    "infobase": "demo",
+    "name": "1c_demo_prod",
+    "config": "Бухгалтерия предприятия 3.0",
+    "url": "http://server.example:8080/demo/hs/mcp-1c",
+    "cluster": "",
+    "dump": "",
+    "note": "",
+    "prod": true,
+    "allowExecute": false
+  }
+]
